@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Your Info</title>
+</head>
+<body>
+    <h2>Submit Your Info</h2>
+            {% if error %}
+        <div style="color: red; font-weight: bold;">
+            {{ error }}
+        </div>
+     {% endif %}
+    <form method="POST" action="/add">
+        <label for="author">Author:</label><br>
+        <input type="text" id="author" name="author" required><br><br>
+
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" required><br><br>
+
+        <label for="content">Content:</label><br>
+        <input type="text" id="content" name="content" required><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
