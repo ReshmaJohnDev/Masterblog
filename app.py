@@ -4,8 +4,8 @@ import os
 
 
 FILE_NAME = "blog_post.json"
-
 app = Flask(__name__)
+
 
 def fetch_blog_post():
     """
@@ -54,6 +54,7 @@ def index():
         return render_template('index.html', error_message=error_message)
     return render_template('index.html', posts=blog_posts)
 
+
 @app.route('/add', methods=['GET', 'POST'])
 def add():
     """
@@ -94,6 +95,40 @@ def delete(post_id):
     write_blog_post(updated_post)
 
     return redirect(url_for('index'))
+
+
+@app.route('/update/<int:post_id>', methods=['GET', 'POST'])
+def update(post_id):
+    """
+    This route will load the update form
+    Update the form to send a POST request to the same route, which will then
+    update the blog post in our storage.
+    """
+    # Fetch the blog posts from the JSON file
+    post = fetch_post_by_id(post_id)
+    if post is None:
+        return "Post not found", 404
+
+    if request.method == 'POST':
+        # Retrieve form data
+        post['author'] = request.form.get('author')
+        post['title'] = request.form.get('title')
+        post['content'] = request.form.get('content')
+
+        # Fetch current blog posts
+        blog_posts = fetch_blog_post()
+        try:
+            for i in range(len(blog_posts)):
+                if blog_posts[i]['id'] == post['id']:
+                    blog_posts[i] = post  # Correctly updates the original list
+            write_blog_post(blog_posts)
+            return redirect(url_for('index'))
+        except Exception as e:
+            return render_template('update.html', post=post,
+                                  error=f"An error occurred while updating the post: {str(e)}")
+
+    # Render the update form with the current post data
+    return render_template('update.html', post=post)
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
