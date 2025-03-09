@@ -83,5 +83,17 @@ def add():
     return render_template('add.html')
 
 
+@app.route('/delete/<int:post_id>', methods=['POST'])
+def delete(post_id):
+    """
+     This route will remove the specified blog post from our blog_posts list
+     and redirect the user back to the home page.
+    """
+    blog_posts = fetch_blog_post()
+    updated_post = [blog_post for blog_post in blog_posts if blog_post['id'] != post_id]
+    write_blog_post(updated_post)
+
+    return redirect(url_for('index'))
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=True)
