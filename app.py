@@ -4,6 +4,8 @@ import os
 
 
 FILE_NAME = "blog_post.json"
+
+
 app = Flask(__name__)
 
 
