@@ -19,6 +19,11 @@
             {{ success_message }}
         </div>
     {% endif %}
+
+    <form method="GET" action="{{ url_for('add') }}">
+        <input type="submit" value="Add Post" class="add-post-button">
+    </form>
+    <br>
     {% for post in posts %}
         <div class="post" id="{{post['id']}}">
             <h2>{{post['title']}}</h2>
