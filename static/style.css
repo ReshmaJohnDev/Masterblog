@@ -25,3 +25,11 @@ h1 {
 .post p {
     margin: 10px 0;
 }
+
+.add-post-button {
+    background-color: #002244;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
